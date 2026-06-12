@@ -1,0 +1,6 @@
+name = "sunscm-screen"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+
+# 密钥不要写在这里。用以下命令设置（运行后粘贴你的 Anthropic API Key）：
+#   wrangler secret put ANTHROPIC_API_KEY

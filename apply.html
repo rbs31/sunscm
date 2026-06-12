@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>预约合规初筛 · 阳光供应链 Sun Supply Chain</title>
+<meta name="description" content="填写信息，获取针对 2026 IOR 新政的智能合规初筛，并预约阳光供应链的免费评估。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E2A34;--ink-deep:#081A21;--sun:#E69A2E;--sun-soft:#F3C56B;
+    --paper:#F7F5F0;--paper-2:#EFEBE2;--card:#FFFFFF;--text:#16323B;--muted:#5C6E74;
+    --line:rgba(14,42,52,.14);--line-light:rgba(247,245,240,.16);
+    --ok:#3F8E5B;--warn:#C9821F;--high:#C0463B;
+    --font-display:"Fraunces","Noto Serif SC",Georgia,serif;
+    --font-body:"Inter","Noto Sans SC",system-ui,sans-serif;
+    --font-mono:"Space Mono","Noto Sans SC",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-body);color:var(--text);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+
+  /* top bar */
+  .bar{background:var(--ink-deep);color:#fff}
+  .bar-in{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:11px;color:#fff}
+  .brand .zh{font-family:var(--font-display);font-weight:600;font-size:17px}
+  .brand .en{font-family:var(--font-mono);font-size:9px;letter-spacing:.2em;color:var(--sun-soft);text-transform:uppercase;margin-top:2px}
+  .bar a.back{font-size:13.5px;color:rgba(247,245,240,.7)}
+  .bar a.back:hover{color:var(--sun-soft)}
+
+  /* hero */
+  .top{background:var(--ink);color:#fff;padding:56px 0 64px;position:relative;overflow:hidden}
+  .top-sun{position:absolute;left:50%;bottom:-260px;transform:translateX(-50%);width:680px;height:680px;background:radial-gradient(circle,rgba(243,197,107,.34),rgba(230,154,46,0) 62%);pointer-events:none}
+  .eyebrow{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--sun);display:inline-flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:1px;background:var(--sun)}
+  .top h1{font-family:var(--font-display);font-weight:500;font-size:clamp(28px,5vw,42px);line-height:1.1;margin:16px 0 12px;position:relative}
+  .top p{color:rgba(247,245,240,.78);max-width:520px;position:relative;font-size:15.5px}
+
+  /* card */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:34px 32px;margin:-32px auto 60px;position:relative;box-shadow:0 30px 60px -40px rgba(14,42,52,.45)}
+  .grp{margin-bottom:22px}
+  .grp.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  label{display:block;font-size:13.5px;font-weight:500;margin-bottom:7px}
+  label .req{color:var(--sun);margin-left:3px}
+  label .hint{color:var(--muted);font-weight:400;font-size:12px;margin-left:6px}
+  input,select,textarea{
+    width:100%;font-family:var(--font-body);font-size:15px;color:var(--text);
+    background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;transition:border-color .2s,box-shadow .2s;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sun);box-shadow:0 0 0 3px rgba(230,154,46,.16)}
+  textarea{resize:vertical;min-height:84px}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C6E74' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+  .submit{
+    width:100%;font-family:var(--font-body);font-size:16px;font-weight:600;
+    background:var(--sun);color:var(--ink-deep);border:none;border-radius:999px;padding:15px;cursor:pointer;margin-top:6px;
+    transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .submit:hover{transform:translateY(-2px);box-shadow:0 12px 28px -10px rgba(230,154,46,.6)}
+  .submit:disabled{opacity:.7;cursor:default;transform:none;box-shadow:none}
+  .note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.5}
+  .err{color:var(--high);font-size:13px;margin-top:10px;display:none}
+
+  .spinner{width:17px;height:17px;border:2px solid rgba(8,26,33,.3);border-top-color:var(--ink-deep);border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* result */
+  .result{display:none}
+  .rl-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.06em;padding:7px 13px;border-radius:999px;text-transform:uppercase}
+  .rl-low{background:rgba(63,142,91,.12);color:var(--ok)}
+  .rl-mid{background:rgba(201,130,31,.14);color:var(--warn)}
+  .rl-high{background:rgba(192,70,59,.12);color:var(--high)}
+  .rl-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+  .result h2{font-family:var(--font-display);font-weight:600;font-size:24px;margin:16px 0 12px}
+  .result .summary{font-size:15.5px;color:var(--text);background:var(--paper);border-left:3px solid var(--sun);padding:14px 16px;border-radius:0 10px 10px 0;margin-bottom:24px}
+  .block-h{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .flags{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+  .flags li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px}
+  .flags li::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--sun);margin-top:8px;flex:none}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:28px}
+  .chip{font-size:13px;background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px}
+  .confirm{background:var(--ink);color:#fff;border-radius:12px;padding:20px 22px}
+  .confirm strong{color:var(--sun-soft)}
+  .confirm .ct{margin-top:10px;font-size:13.5px;color:rgba(247,245,240,.8)}
+  .restart{display:inline-block;margin-top:18px;font-size:13.5px;color:var(--muted);cursor:pointer;border-bottom:1px solid var(--line)}
+  .ai-tag{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:18px;text-align:right}
+
+  @media(max-width:560px){.grp.row{grid-template-columns:1fr}.panel{padding:26px 20px}}
+  @media(prefers-reduced-motion:reduce){.submit:hover{transform:none}}
+  :focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <line x1="2" y1="23" x2="30" y2="23" stroke="#E69A2E" stroke-width="2" stroke-linecap="round"/>
+        <path d="M8 23a8 8 0 0 1 16 0Z" fill="#E69A2E"/>
+        <line x1="16" y1="4" x2="16" y2="8.5" stroke="#F3C56B" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span><span class="zh" style="display:block">阳光供应链</span><span class="en">Sun Supply Chain</span></span>
+    </a>
+    <a class="back" href="index.html">← 返回首页</a>
+  </div>
+</div>
+
+<section class="top">
+  <div class="top-sun"></div>
+  <div class="wrap">
+    <span class="eyebrow">免费合规初筛 · 2026 IOR 新政</span>
+    <h1>一分钟，看清你在新政下的合规风险</h1>
+    <p>填写下面的信息，系统会即时为你生成一份针对性的合规初筛摘要；同时我们的顾问会收到你的资料，尽快与你联系，安排免费评估。</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="panel">
+    <!-- FORM -->
+    <div id="formView">
+      <div class="grp row">
+        <div>
+          <label>称呼 / 姓名<span class="req">*</span></label>
+          <input id="name" type="text" placeholder="如：陈先生">
+        </div>
+        <div>
+          <label>公司名称<span class="hint">选填</span></label>
+          <input id="company" type="text" placeholder="如：某某电子商务有限公司">
+        </div>
+      </div>
+
+      <div class="grp row">
+        <div>
+          <label>微信号<span class="hint">微信/邮箱至少填一项</span></label>
+          <input id="wechat" type="text" placeholder="您的微信号">
+        </div>
+        <div>
+          <label>邮箱</label>
+          <input id="email" type="email" placeholder="name@example.com">
+        </div>
+      </div>
+
+      <div class="grp row">
+        <div>
+          <label>卖家类型<span class="req">*</span></label>
+          <select id="sellerType">
+            <option value="">请选择</option>
+            <option>亚马逊 FBA</option>
+            <option>独立站 / DTC</option>
+            <option>传统 B2B 贸易</option>
+            <option>其他</option>
+          </select>
+        </div>
+        <div>
+          <label>主营品类<span class="req">*</span></label>
+          <select id="category">
+            <option value="">请选择</option>
+            <option>服装鞋帽 / 纺织</option>
+            <option>消费电子</option>
+            <option>家居百货</option>
+            <option>玩具 / 母婴</option>
+            <option>美妆 / 个护</option>
+            <option>食品 / 保健</option>
+            <option>其他</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grp row">
+        <div>
+          <label>目前进口方式<span class="req">*</span></label>
+          <select id="importMethod">
+            <option value="">请选择</option>
+            <option>自己作为 IOR 报关</option>
+            <option>货代代为报关</option>
+            <option>买单进口</option>
+            <option>海外仓 / 服务商代理</option>
+            <option>尚未进口 · 刚起步</option>
+          </select>
+        </div>
+        <div>
+          <label>月进口规模<span class="req">*</span></label>
+          <select id="volume">
+            <option value="">请选择</option>
+            <option>低于 $5 万</option>
+            <option>$5 万 – $20 万</option>
+            <option>$20 万 – $100 万</option>
+            <option>高于 $100 万</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grp">
+        <label>是否已有美国公司<span class="req">*</span></label>
+        <select id="usEntity">
+          <option value="">请选择</option>
+          <option>已有美国公司</option>
+          <option>没有</option>
+          <option>正在计划中</option>
+        </select>
+      </div>
+
+      <div class="grp">
+        <label>你目前最担心的问题<span class="hint">选填</span></label>
+        <textarea id="concern" placeholder="例如：以前是自己报关，听说新政后不行了，不知道怎么过渡……"></textarea>
+      </div>
+
+      <button class="submit" id="submitBtn" type="button">生成合规初筛并预约</button>
+      <div class="err" id="err">请填写带 * 的必填项，并至少留下微信或邮箱其中一项。</div>
+      <p class="note">提交即表示同意我们就你的咨询与你联系。本初筛为一般性参考，不构成法律或税务意见。</p>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result" id="resultView">
+      <span class="rl-badge" id="rlBadge"><span class="rl-dot"></span><span id="rlText">风险等级</span></span>
+      <h2>你的合规初筛摘要</h2>
+      <div class="summary" id="summary"></div>
+
+      <div class="block-h">关键风险点 · Key flags</div>
+      <ul class="flags" id="flags"></ul>
+
+      <div class="block-h">建议的合规方向 · Recommended</div>
+      <div class="chips" id="chips"></div>
+
+      <div class="confirm">
+        <strong>已为你记录这次咨询。</strong>
+        <div class="ct" id="confirmText">我们的顾问 Arthur 会尽快通过你留下的方式与你联系，安排一次免费的合规评估。</div>
+      </div>
+      <div class="ai-tag" id="aiTag">初筛由智能引擎生成</div>
+      <span class="restart" id="restart">← 重新填写</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ============================================================
+     CONFIG —— 部署到 sunscm.com 前，请完成这一步：
+     1) 打开 https://web3forms.com → 输入 asherchu3@gmail.com → 拿到免费 Access Key
+     2) 把下面的 YOUR_WEB3FORMS_ACCESS_KEY 替换成你的 key
+     替换后，访客提交的资料 + 初筛摘要会自动发到 asherchu3@gmail.com。
+     （Access Key 放在前端是安全的，Web3Forms 官方允许公开。）
+     ============================================================ */
+  const WEB3FORMS_ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+  const OWNER_EMAIL = "asherchu3@gmail.com";
+
+  /* 部署 Cloudflare Worker 后，把它的地址填到这里，线上即可使用真正的 Claude 智能初筛。
+     留空时：Claude.ai 预览里直连可用；部署到 sunscm.com 后自动降级为规则引擎。
+     例：const SCREEN_WORKER_URL = "https://sunscm-screen.你的子域.workers.dev"; */
+  const SCREEN_WORKER_URL = "";
+
+  const $ = id => document.getElementById(id);
+
+  function collect(){
+    return {
+      name: $('name').value.trim(),
+      company: $('company').value.trim(),
+      wechat: $('wechat').value.trim(),
+      email: $('email').value.trim(),
+      sellerType: $('sellerType').value,
+      category: $('category').value,
+      importMethod: $('importMethod').value,
+      volume: $('volume').value,
+      usEntity: $('usEntity').value,
+      concern: $('concern').value.trim()
+    };
+  }
+
+  function validate(d){
+    if(!d.name || !d.sellerType || !d.category || !d.importMethod || !d.volume || !d.usEntity) return false;
+    if(!d.wechat && !d.email) return false;
+    return true;
+  }
+
+  /* ---------- Claude API pre-screen ---------- */
+  async function screenWithClaude(d){
+    // 生产环境（sunscm.com）：调用你的 Cloudflare Worker，API 密钥留在服务端
+    if(SCREEN_WORKER_URL){
+      const res = await fetch(SCREEN_WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ intake: d })
+      });
+      if(!res.ok) throw new Error("worker " + res.status);
+      const parsed = await res.json();
+      if(parsed && parsed.error) throw new Error(parsed.error);
+      parsed._engine = "Claude";
+      return parsed;
+    }
+    // Claude.ai 预览：运行时自动注入密钥，可直连
+    const instruction =
+      "你是美国海关进口主体（IOR）合规初筛顾问，背景是 2026 年 6 月《强化海关执法》行政令，服务对象是把货物进口到美国的中国跨境电商卖家。" +
+      "根据客户填写的信息，给出一份简洁的合规初筛。只返回一个 JSON 对象，不要 markdown、不要代码块、不要任何多余文字。" +
+      'JSON 结构：{"riskLevel":"低|中|高","visitorSummary":"给客户看的中文摘要，2-3句，专业、有帮助、不制造恐慌","flags":["具体风险点，中文，3-5条"],"recommendedServices":["建议的合规服务名，中文，2-4个"],"internalNote":"给顾问看的中文要点，含建议的切入角度"}';
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: instruction + "\n\n客户信息：\n" + JSON.stringify(d, null, 2) }]
+      })
+    });
+    if(!res.ok) throw new Error("api " + res.status);
+    const data = await res.json();
+    const text = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("").trim();
+    const clean = text.replace(/```json/gi, "").replace(/```/g, "").trim();
+    const parsed = JSON.parse(clean);
+    parsed._engine = "Claude";
+    return parsed;
+  }
+
+  /* ---------- Local rule-based fallback (runs on the deployed static site) ---------- */
+  function screenLocally(d){
+    const flags = [];
+    let score = 0;
+    if(d.importMethod === "买单进口"){ flags.push("「买单进口」在新政下属高危——出口报关单须与美国 CBP 申报对账，买单几乎必被穿透。"); score += 3; }
+    if(d.importMethod === "自己作为 IOR 报关"){ flags.push("外国主体自行报关已被限制：不能再走非正式报关，正式报关须单笔保函 + CTPAT。"); score += 2; }
+    if(d.usEntity === "没有"){ flags.push("尚无美国公司——需要搭建一个具备真实实质的美国 IOR 主体（非挂名空壳）。"); score += 2; }
+    if(d.usEntity === "正在计划中"){ flags.push("美国主体在筹划中——结构要一次搭对，避免日后被认定为空壳。"); score += 1; }
+    if(d.category === "服装鞋帽 / 纺织"){ flags.push("服装纺织涉棉制品，存在 UFLPA 强迫劳动暴露，需供应链溯源与声明。"); score += 1; }
+    if(d.category === "消费电子"){ flags.push("电子产品可能涉 FCC 认证，部分组件涉 UFLPA（多晶硅）排查。"); score += 1; }
+    if(d.category === "玩具 / 母婴"){ flags.push("玩具/儿童用品需 CPSC / CPC 认证文件。"); score += 1; }
+    if(d.category === "美妆 / 个护" || d.category === "食品 / 保健"){ flags.push("该品类可能受 FDA 监管，需对应合规文件。"); score += 1; }
+    if(d.sellerType === "亚马逊 FBA"){ flags.push("FBA 关键点：Amazon 不做 IOR、收货地≠货主，需自有合规进口主体与多 SKU 文件。"); }
+    if(d.volume === "$20 万 – $100 万" || d.volume === "高于 $100 万"){ flags.push("进口规模较大，受益所有权披露与持续 good standing 监控尤为重要。"); score += 1; }
+    if(flags.length === 0){ flags.push("基础信息齐全，建议做一次完整评估以确认进口主体与文件链是否到位。"); }
+
+    const level = score >= 4 ? "高" : (score >= 2 ? "中" : "低");
+    const rec = [];
+    if(d.usEntity !== "已有美国公司") rec.push("合规美国 IOR 主体搭建");
+    rec.push("CTPAT 清关与报关");
+    if(d.importMethod === "买单进口" || d.importMethod === "自己作为 IOR 报关") rec.push("供应链合规文件归集");
+    if(d.sellerType === "亚马逊 FBA") rec.push("FBA 卖家合规方案");
+    rec.push("持续合规与信誉监控");
+
+    const summaryMap = {
+      "高": "根据你填写的信息，你当前的进口方式在新政下风险较高，建议尽快过渡到合规结构。好消息是，这正是我们能帮你系统解决的。",
+      "中": "你的情况存在几处需要尽快处理的合规缺口，但都在可控范围内。把结构搭对，就能稳定地继续进口。",
+      "低": "你的基础条件不错。把进口主体、文件链与持续合规这几环补齐，就能在新政下走得很稳。"
+    };
+    return {
+      riskLevel: level,
+      visitorSummary: summaryMap[level],
+      flags: flags.slice(0,5),
+      recommendedServices: [...new Set(rec)].slice(0,4),
+      internalNote: "规则引擎初筛（部署环境）。重点：" + flags.slice(0,3).join(" / "),
+      _engine: "规则引擎"
+    };
+  }
+
+  /* ---------- Email to owner via Web3Forms (auto), with mailto fallback ---------- */
+  async function emailOwner(d, r){
+    const body =
+      "【阳光供应链 · 新预约 / 合规初筛】\n\n" +
+      "姓名：" + d.name + "\n公司：" + (d.company||"—") + "\n微信：" + (d.wechat||"—") + "\n邮箱：" + (d.email||"—") + "\n\n" +
+      "卖家类型：" + d.sellerType + "\n主营品类：" + d.category + "\n进口方式：" + d.importMethod + "\n月规模：" + d.volume + "\n美国公司：" + d.usEntity + "\n" +
+      "最担心：" + (d.concern||"—") + "\n\n" +
+      "—— 初筛结果（" + r._engine + "）——\n风险等级：" + r.riskLevel + "\n摘要：" + r.visitorSummary + "\n关键风险点：\n- " + r.flags.join("\n- ") +
+      "\n建议方向：" + r.recommendedServices.join("、") + "\n顾问要点：" + (r.internalNote||"—");
+
+    const subject = "阳光供应链 · 新预约 [" + r.riskLevel + "风险] " + d.name + (d.company?(" / "+d.company):"");
+
+    if(WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY !== "YOUR_WEB3FORMS_ACCESS_KEY"){
+      try{
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json", "Accept":"application/json" },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            from_name: "阳光供应链官网预约",
+            subject: subject,
+            name: d.name, company: d.company, wechat: d.wechat, email: d.email,
+            seller_type: d.sellerType, category: d.category, import_method: d.importMethod,
+            volume: d.volume, us_entity: d.usEntity, concern: d.concern,
+            risk_level: r.riskLevel, assessment: body
+          })
+        });
+        const j = await res.json();
+        return j && j.success;
+      }catch(e){ /* fall through to mailto */ }
+    }
+    // Fallback: open the visitor's mail client pre-filled to the owner
+    window.location.href = "mailto:" + OWNER_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    return false;
+  }
+
+  function render(r){
+    $('formView').style.display = "none";
+    const rv = $('resultView'); rv.style.display = "block";
+    const badge = $('rlBadge'); const cls = r.riskLevel==="高"?"rl-high":(r.riskLevel==="中"?"rl-mid":"rl-low");
+    badge.className = "rl-badge " + cls;
+    $('rlText').textContent = "风险等级 · " + r.riskLevel;
+    $('summary').textContent = r.visitorSummary;
+    $('flags').innerHTML = r.flags.map(f => "<li>" + f.replace(/</g,"&lt;") + "</li>").join("");
+    $('chips').innerHTML = r.recommendedServices.map(s => '<span class="chip">' + s.replace(/</g,"&lt;") + "</span>").join("");
+    $('aiTag').textContent = "初筛由「" + r._engine + "」生成 · 供参考";
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  $('submitBtn').addEventListener('click', async function(){
+    const d = collect();
+    if(!validate(d)){ $('err').style.display = "block"; return; }
+    $('err').style.display = "none";
+    const btn = this; btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> 正在生成合规初筛…';
+
+    let result;
+    try{ result = await screenWithClaude(d); }
+    catch(e){ result = screenLocally(d); }
+
+    try{ await emailOwner(d, result); }catch(e){ /* non-blocking */ }
+
+    render(result);
+    btn.disabled = false; btn.textContent = "生成合规初筛并预约";
+  });
+
+  $('restart').addEventListener('click', function(){
+    $('resultView').style.display = "none";
+    $('formView').style.display = "block";
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+</script>
+</body>
+</html>
